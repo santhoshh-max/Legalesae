@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <meta name="description"
+          content="LegalEase - AI Powered Legal Document Generator">
+
+    <title>LegalEase - AI Legal Document Generator</title>
+
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', path='css/style.css') }}"
+    >
+
+</head>
+
+<body>
+
+    <!-- ==================================================
+         Navigation
+         ================================================== -->
+
+    <nav class="navbar">
+
+        <div class="navbar-container">
+
+            <a href="/" class="brand">
+                <span class="brand-icon">⚖</span>
+                <span>LegalEase</span>
+            </a>
+
+            <div class="nav-links">
+
+                <a href="/" class="nav-link">
+                    Home
+                </a>
+
+                <a href="/history" class="nav-link">
+                    History
+                </a>
+
+            </div>
+
+        </div>
+
+    </nav>
+
+
+    <!-- ==================================================
+         Hero Section
+         ================================================== -->
+
+    <section class="hero">
+
+        <div class="hero-container">
+
+            <div class="hero-badge">
+                AI Powered Legal Document Generator
+            </div>
+
+            <h1>
+                Create Legal Documents
+                <span class="highlight">
+                    With AI
+                </span>
+            </h1>
+
+            <p class="hero-description">
+                Generate professionally structured legal documents
+                using artificial intelligence. Provide your details,
+                select the document type, and let LegalEase create
+                a customized draft.
+            </p>
+
+        </div>
+
+    </section>
+
+
+    <!-- ==================================================
+         Main Generator
+         ================================================== -->
+
+    <main class="main-container">
+
+        <section class="generator-card">
+
+            <div class="card-header">
+
+                <div>
+
+                    <h2>
+                        Generate Your Legal Document
+                    </h2>
+
+                    <p>
+                        Complete the information below to create
+                        your document.
+                    </p>
+
+                </div>
+
+                <div class="security-badge">
+                    🔒 Secure
+                </div>
+
+            </div>
+
+
+            <!-- ==================================================
+                 Generator Form
+                 ================================================== -->
+
+            <form
+                id="document-form"
+                action="/generate"
+                method="POST"
+            >
+
+                <!-- Name -->
+
+                <div class="form-group">
+
+                    <label for="username">
+                        Your Name
+                        <span class="required">*</span>
+                    </label>
+
+                    <input
+                        type="text"
+                        id="username"
+                        name="username"
+                        placeholder="Enter your full name"
+                        required
+                        minlength="2"
+                        maxlength="100"
+                    >
+
+                    <small>
+                        Enter the name of the person requesting
+                        the document.
+                    </small>
+
+                </div>
+
+
+                <!-- Document Type -->
+
+                <div class="form-group">
+
+                    <label for="document_type">
+                        Document Type
+                        <span class="required">*</span>
+                    </label>
+
+                    <select
+                        id="document_type"
+                        name="document_type"
+                        required
+                    >
+
+                        <option value="">
+                            Select a legal document
+                        </option>
+
+                        <option value="Rental Agreement">
+                            Rental Agreement
+                        </option>
+
+                        <option value="Employment Contract">
+                            Employment Contract
+                        </option>
+
+                        <option value="NDA">
+                            Non-Disclosure Agreement (NDA)
+                        </option>
+
+                        <option value="Power of Attorney">
+                            Power of Attorney
+                        </option>
+
+                        <option value="Affidavit">
+                            Affidavit
+                        </option>
+
+                        <option value="Legal Notice">
+                            Legal Notice
+                        </option>
+
+                    </select>
+
+                    <small>
+                        Select the type of legal document
+                        you want to generate.
+                    </small>
+
+                </div>
+
+
+                <!-- Purpose -->
+
+                <div class="form-group">
+
+                    <label for="purpose">
+                        Purpose
+                        <span class="required">*</span>
+                    </label>
+
+                    <input
+                        type="text"
+                        id="purpose"
+                        name="purpose"
+                        placeholder="Example: Residential property rental"
+                        required
+                        minlength="10"
+                        maxlength="500"
+                    >
+
+                    <small>
+                        Briefly describe why you need this document.
+                    </small>
+
+                </div>
+
+
+                <!-- Details -->
+
+                <div class="form-group">
+
+                    <label for="details">
+                        Document Details
+                        <span class="required">*</span>
+                    </label>
+
+                    <textarea
+                        id="details"
+                        name="details"
+                        rows="10"
+                        placeholder="Enter all relevant details here...
+
+Example:
+Property address:
+Landlord name:
+Tenant name:
+Monthly rent:
+Security deposit:
+Agreement duration:
+Payment date:
+Special conditions:"
+                        required
+                        minlength="10"
+                        maxlength="10000"
+                    ></textarea>
+
+                    <div class="textarea-footer">
+
+                        <small>
+                            Provide as much relevant information
+                            as possible.
+                        </small>
+
+                        <span id="character-count">
+                            0 / 10000
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <!-- Legal Disclaimer -->
+
+                <div class="disclaimer">
+
+                    <div class="disclaimer-icon">
+                        ⚠
+                    </div>
+
+                    <div>
+
+                        <strong>
+                            Important Legal Disclaimer
+                        </strong>
+
+                        <p>
+                            LegalEase generates AI-assisted document
+                            drafts for informational purposes. The
+                            generated document is not a substitute for
+                            advice from a qualified lawyer. Review the
+                            document carefully and consult a legal
+                            professional when appropriate.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <!-- Submit -->
+
+                <button
+                    type="submit"
+                    id="generate-button"
+                    class="primary-button"
+                >
+
+                    <span id="button-text">
+                        Generate Legal Document
+                    </span>
+
+                    <span
+                        id="button-loader"
+                        class="button-loader"
+                        hidden
+                    >
+                        Generating...
+                    </span>
+
+                </button>
+
+            </form>
+
+        </section>
+
+
+        <!-- ==================================================
+             Supported Documents
+             ================================================== -->
+
+        <section class="documents-section">
+
+            <div class="section-heading">
+
+                <h2>
+                    Supported Documents
+                </h2>
+
+                <p>
+                    Choose from the available document templates.
+                </p>
+
+            </div>
+
+
+            <div class="document-grid">
+
+
+                <!-- Rental Agreement -->
+
+                <div class="document-card">
+
+                    <div class="document-icon">
+                        🏠
+                    </div>
+
+                    <h3>
+                        Rental Agreement
+                    </h3>
+
+                    <p>
+                        Create a structured residential
+                        or property rental agreement.
+                    </p>
+
+                </div>
+
+
+                <!-- Employment Contract -->
+
+                <div class="document-card">
+
+                    <div class="document-icon">
+                        💼
+                    </div>
+
+                    <h3>
+                        Employment Contract
+                    </h3>
+
+                    <p>
+                        Draft an employment agreement
+                        covering key employment terms.
+                    </p>
+
+                </div>
+
+
+                <!-- NDA -->
+
+                <div class="document-card">
+
+                    <div class="document-icon">
+                        🔐
+                    </div>
+
+                    <h3>
+                        NDA
+                    </h3>
+
+                    <p>
+                        Generate a Non-Disclosure Agreement
+                        for confidential information.
+                    </p>
+
+                </div>
+
+
+                <!-- Power of Attorney -->
+
+                <div class="document-card">
+
+                    <div class="document-icon">
+                        ✍️
+                    </div>
+
+                    <h3>
+                        Power of Attorney
+                    </h3>
+
+                    <p>
+                        Create a structured Power of Attorney
+                        draft based on your requirements.
+                    </p>
+
+                </div>
+
+
+                <!-- Affidavit -->
+
+                <div class="document-card">
+
+                    <div class="document-icon">
+                        📜
+                    </div>
+
+                    <h3>
+                        Affidavit
+                    </h3>
+
+                    <p>
+                        Generate an organized affidavit
+                        draft from the provided facts.
+                    </p>
+
+                </div>
+
+
+                <!-- Legal Notice -->
+
+                <div class="document-card">
+
+                    <div class="document-icon">
+                        ⚖️
+                    </div>
+
+                    <h3>
+                        Legal Notice
+                    </h3>
+
+                    <p>
+                        Create a structured legal notice
+                        draft for review.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- ==================================================
+             How It Works
+             ================================================== -->
+
+        <section class="how-it-works">
+
+            <div class="section-heading">
+
+                <h2>
+                    How LegalEase Works
+                </h2>
+
+                <p>
+                    Generate your document in three simple steps.
+                </p>
+
+            </div>
+
+
+            <div class="steps">
+
+
+                <div class="step">
+
+                    <div class="step-number">
+                        1
+                    </div>
+
+                    <h3>
+                        Enter Details
+                    </h3>
+
+                    <p>
+                        Provide your name, document type,
+                        purpose and relevant information.
+                    </p>
+
+                </div>
+
+
+                <div class="step">
+
+                    <div class="step-number">
+                        2
+                    </div>
+
+                    <h3>
+                        AI Generation
+                    </h3>
+
+                    <p>
+                        Gemini AI processes the information
+                        and generates a structured document.
+                    </p>
+
+                </div>
+
+
+                <div class="step">
+
+                    <div class="step-number">
+                        3
+                    </div>
+
+                    <h3>
+                        Review & Download
+                    </h3>
+
+                    <p>
+                        Review the generated draft and
+                        download it as PDF or DOCX.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- ==================================================
+         Footer
+         ================================================== -->
+
+    <footer class="footer">
+
+        <div class="footer-container">
+
+            <div class="footer-brand">
+
+                <span class="brand-icon">
+                    ⚖
+                </span>
+
+                <strong>
+                    LegalEase
+                </strong>
+
+            </div>
+
+            <p>
+                AI-powered legal document drafting assistant.
+            </p>
+
+            <p class="copyright">
+                © 2026 LegalEase. For informational purposes only.
+            </p>
+
+        </div>
+
+    </footer>
+
+
+    <!-- ==================================================
+         JavaScript
+         ================================================== -->
+
+    <script
+        src="{{ url_for('static', path='js/script.js') }}"
+    ></script>
+
+</body>
+
+</html>
